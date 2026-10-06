@@ -63,6 +63,19 @@ npm run preview  # serve the production build locally
 
 [`https://gagatkaa.github.io/star-nest/`](https://gagatkaa.github.io/star-nest/) — deployed from the `gh-pages` branch.
 
+### One-time Pages setup
+
+The `gh-pages` branch is already pushed. If the URL still 404s, enable Pages once:
+repo **Settings → Pages → Source: "Deploy from a branch" → Branch: `gh-pages` / `(root)` → Save**.
+Then the URL goes live (allow ~1 min).
+
+Re-deploy after a change:
+
+```bash
+npm run build
+npm run deploy     # pushes dist/ to the gh-pages branch
+```
+
 ## Project structure
 
 ```
