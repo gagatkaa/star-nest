@@ -39,10 +39,10 @@ const uniforms = {
 // ---------------------------------------------------------------------------
 // Shader recourse
 // ---------------------------------------------------------------------------
-const starNestData = new Float32Array(MAX_BALLS * 4); // r,g = uv pos, b = uv radius, a = active
-const ballsTex = new THREE.DataTexture(starNestData, MAX_BALLS, 1, THREE.RGBAFormat, THREE.FloatType);
-ballsTex.magFilter = THREE.NearestFilter;
-ballsTex.minFilter = THREE.NearestFilter;
+const starNestData = new Uint8Array(MAX_BALLS * 4); // r,g = uv pos, b = uv radius, a = active flag (0..255)
+const ballsTex = new THREE.DataTexture(starNestData, MAX_BALLS, 1, THREE.RGBAFormat);
+ballsTex.minFilter = THREE.LinearFilter; // must stay filterable, otherwise three generates no sampler binding
+ballsTex.magFilter = THREE.LinearFilter;
 ballsTex.generateMipmaps = false;
 ballsTex.needsUpdate = true;
 const ballsTexture = texture(ballsTex);
@@ -163,10 +163,10 @@ const uploadBalls = () => {
     const p = bodies[i].position;
     const ux = (p.x + 1) * 0.5;
     const uy = (p.y + 1) * 0.5; // shader uv() is y-up
-    starNestData[i * 4] = ux;
-    starNestData[i * 4 + 1] = uy;
-    starNestData[i * 4 + 2] = BALL_RADIUS * 0.5;
-    starNestData[i * 4 + 3] = 1;
+    starNestData[i * 4] = Math.round(ux * 255);
+    starNestData[i * 4 + 1] = Math.round(uy * 255);
+    starNestData[i * 4 + 2] = Math.round(BALL_RADIUS * 0.5 * 255);
+    starNestData[i * 4 + 3] = 255;
   }
   ballsTex.needsUpdate = true;
 };

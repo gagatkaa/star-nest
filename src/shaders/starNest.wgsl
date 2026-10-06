@@ -47,7 +47,8 @@ fn starNest(fragCoord: vec2f, iTime: f32, iMouse: vec2f, iResolution: vec2f, iSp
   var v = vec3f(0.0);
   for (var r: i32 = 0; r < volsteps; r++) {
     var p = camFrom + s * dir * 0.5;
-    p = abs(vec3f(tile) - mod(p, vec3f(tile * 2.0))); // tiling fold
+    let tileSize = vec3f(tile * 2.0);
+    p = abs(vec3f(tile) - (p - tileSize * floor(p / tileSize))); // tiling fold (GLSL mod is floor-based)
     var pa = 0.0;
     var a = 0.0;
     for (var i: i32 = 0; i < iterations; i++) {
