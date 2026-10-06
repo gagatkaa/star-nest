@@ -34,19 +34,19 @@ fn starNest(fragCoord: vec2f, iTime: f32, iMouse: vec2f, iResolution: vec2f, iSp
   let d1 = rot2 * dir.xy;
   dir = vec3f(d1.x, d1.y, dir.z);
 
-  var from = vec3f(1.0, 0.5, 0.5);
-  from += vec3f(time * 2.0, time, -2.0);
-  let fz1 = rot1 * from.xz;
-  from = vec3f(fz1.x, from.y, fz1.y);
-  let f1 = rot2 * from.xy;
-  from = vec3f(f1.x, f1.y, from.z);
+  var camFrom = vec3f(1.0, 0.5, 0.5);
+  camFrom += vec3f(time * 2.0, time, -2.0);
+  let fz1 = rot1 * camFrom.xz;
+  camFrom = vec3f(fz1.x, camFrom.y, fz1.y);
+  let f1 = rot2 * camFrom.xy;
+  camFrom = vec3f(f1.x, f1.y, camFrom.z);
 
   // volumetric rendering
   var s = 0.1;
   var fade = 1.0;
   var v = vec3f(0.0);
   for (var r: i32 = 0; r < volsteps; r++) {
-    var p = from + s * dir * 0.5;
+    var p = camFrom + s * dir * 0.5;
     p = abs(vec3f(tile) - mod(p, vec3f(tile * 2.0))); // tiling fold
     var pa = 0.0;
     var a = 0.0;

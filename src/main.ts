@@ -1,5 +1,5 @@
 import * as THREE from 'three/webgpu';
-import { wgslFn, uniform, uv, texture } from 'three/tsl';
+import { wgslFn, uniform, uv, texture, sampler } from 'three/tsl';
 import * as CANNON from 'cannon-es';
 import { GUI } from 'lil-gui';
 
@@ -56,7 +56,7 @@ let renderTarget: THREE.RenderTarget;
 let camera: THREE.OrthographicCamera;
 let scene: THREE.Scene;
 let rtScene: THREE.Scene;
-let clock = new THREE.Clock();
+const timer = new THREE.Timer();
 
 const world = new CANNON.World();
 world.gravity.set(0, 0, 0);
@@ -283,9 +283,9 @@ const init = async () => {
     iMouse: uniforms.iMouse,
     iResolution: uniforms.iResolution,
     iChannel0,
-    iChannel0Sampler: iChannel0,
+    iChannel0Sampler: sampler(iChannel0),
     ballsMap: ballsTexture,
-    ballsMapSampler: ballsTexture,
+    ballsMapSampler: sampler(ballsTexture),
     uLensing: uniforms.uLensing,
     uGlow: uniforms.uGlow,
     uCore: uniforms.uCore,
@@ -362,8 +362,9 @@ const updateGui = () => {
 // Render loop
 // ---------------------------------------------------------------------------
 const draw = () => {
-  const dt = Math.min(clock.getDelta(), 0.05);
-  const elapsed = clock.elapsedTime;
+  timer.update();
+  const dt = Math.min(timer.getDelta(), 0.05);
+  const elapsed = timer.getElapsed();
 
   if (params.gravityOn) {
     world.gravity.set(0, -params.gravity, 0);
