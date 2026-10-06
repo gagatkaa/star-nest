@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Star Nest — WebGPU Gravity Wells</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <canvas id="webgl"></canvas>
+
+    <div id="hud">
+      <h1>Star Nest · Gravity Wells</h1>
+      <p>
+        <em>Drag</em> to slingshot a gravity well · <em>click</em> to drop one ·
+        <em>move</em> to navigate &amp; attract · <em>S</em> shake · <em>G</em> gravity ·
+        <em>R</em> reset · <em>Space</em> spawn
+      </p>
+    </div>
+
+    <div id="credit">
+      Fragment shader:
+      <a href="https://www.shadertoy.com/view/XlfGRj" target="_blank" rel="noopener">"Star Nest" by Pablo Roman Andrioli</a>
+      · ported GLSL → WGSL · physics via cannon-es · WebGPU via three.js
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
